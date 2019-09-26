@@ -1,12 +1,8 @@
-declare SAS C
+declare SAS
 SAS = {Dictionary.new}
-{NewCell 0 ?C}
 
-fun {AddKeyToSAS}
-  C:=@C+1
-  {Dictionary.put SAS @C equivalence(@C)}
-  @C
-end
+declare C
+{NewCell 0 ?C}
 
 fun {ReturnRoot Key}
   local Value in
@@ -16,6 +12,13 @@ fun {ReturnRoot Key}
     else Value
     end
   end
+end
+
+
+fun {AddKeyToSAS}
+  C:=@C+1
+  {Dictionary.put SAS @C equivalence(@C)}
+  @C
 end
 
 fun {RetrieveFromSAS Key}
