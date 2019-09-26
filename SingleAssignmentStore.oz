@@ -1,52 +1,46 @@
-declare SAS C
-SAS = {Dictionary.new}
+declare Store
+Store = {Dictionary.new}
+
+declare C
 {NewCell 0 ?C}
 
 fun {AddKeyToSAS}
+  %{Browse 'AddKeyToSAS'}
   C:=@C+1
-  {Dictionary.put SAS @C equivalence(@C)}
+  {Dictionary.put Store @C equivalence(@C)}
   @C
 end
 
-fun {ReturnRoot Key}
-  local Value in
-    {Dictionary.get SAS Key Value}
-    case Value
-    of equivalence(X) then if X==Key then equivalence(Key) else {ReturnRoot X} end
-    else Value
-    end
-  end
-end
-
 fun {RetrieveFromSAS Key}
-  % {Browse {Dictionary.get SAS Key ?}}
-  {Dictionary.get SAS Key ?} 
-end
-
-proc {BindRefToKeyInSAS Key RefKey}
-  local A B in
-    A={ReturnRoot Key}
-    B={ReturnRoot RefKey}
-    case A
-    of equivalence(X) then case B
-                            of equivalence(Y) then {Dictionary.put SAS X equivalence(Y)}
-                            else {Dictionary.put SAS X B}
-                            end
-    else
-      case B
-      of equivalence(Y) then {Dictionary.put SAS Y A}
-      else if A==B then skip else {Browse 'Error'} end
-      end
-    end 
-  end
+  %{Browse 'RetrieveFromSAS'}
+  {Dictionary.get Store Key ?} 
 end
 
 proc {BindValueToKeyInSAS Key Val}
-  local A in
-    A = {ReturnRoot Key}
-    case A
-    of equivalence(X) then {Dictionary.put SAS X Val}
-    else if A==Val then skip else {Browse 'Error in BindValue'} end
+  %{Browse 'BindValueToKeyInSAS'}
+  local Value in
+    {Dictionary.get Store Key Value}
+    case Value
+    of equivalence(X) then {Dictionary.put Store Key Val}
+    else {Exception.'raise' alreadyAssigned(Key Val {Dictionary.get Store Key ?})}
     end 
   end
+end
+
+proc {BindRefToKeyInSAS Key RefKey}
+  %{Browse 'BindRefToKeyInSAS'}
+  local Value in
+    {Dictionary.get Store Key Value}
+    case Value
+    of equivalence(X) then {Dictionary.put Store Key reference(RefKey)}
+    else {Exception.'raise' alreadyAssigned2(Key {Dictionary.get Store Key ?})}
+    end 
+  end
+end
+
+% Helper functions not part of the assgnment
+
+proc {PrintAll Current}
+  if Current == 1 then {Browse 'Printing Single Assigment Store:'} end
+  if Current > @C then {Browse 'Done Printing Single Assigment Store'} else {Browse {Dictionary.get Store Current ?}} {PrintAll Current+1} end
 end
