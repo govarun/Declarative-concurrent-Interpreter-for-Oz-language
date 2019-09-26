@@ -7,6 +7,7 @@ proc {Adjoin E X NewE}
    end
 end
 proc {Interpreter Stack}
+   {Browse Stack}
    local NE in
       case Stack
       of nil then skip
