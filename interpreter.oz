@@ -1,9 +1,9 @@
 \insert 'Unify.oz'
 declare
-proc {Adjoin E X NewE}
-   local T in
-      T = {AddKeyToSAS}
-      {AdjoinAt E X T NewE}
+proc {Adjoin E X NE}
+   local P in
+      P = {AddKeyToSAS}
+      {AdjoinAt E X P NE}
    end
 end
 proc {Interpreter Stack}
@@ -21,10 +21,10 @@ proc {Interpreter Stack}
 	 [] H|nil then {Interpreter [pair(s:H e:E)]}
 	    
 	 else
-	    {Browse 1}
+	    {Browse 'Exception in SemanticStack'}
 	 end
       else
-	 {Browse 2}
+	 {Browse 'Exception in Stack'}
       end
    end
 end
@@ -42,5 +42,5 @@ Y=
  ]]
 K=[[nop] [nop]]
 
-Stack= [pair(s:Y e:'#')]
+Stack= [pair(s:Y e:'!')]
 {Interpreter Stack}
