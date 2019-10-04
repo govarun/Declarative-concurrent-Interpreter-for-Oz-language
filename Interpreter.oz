@@ -1,4 +1,4 @@
-\insert 'Unify.oz'
+\insert '/Users/varungoyal/GitRepos/Oz-Interpreter/Unify.oz'
 declare
 proc {Adjoin E X NE}
    local P in
@@ -18,6 +18,14 @@ proc {Interpreter Stack}
 	 [] [var ident(I) S]|TT then {Adjoin E I NE} {Interpreter pair(s:[S] e:NE)|pair(s:TT e:E)|T}
 	 [] [bind ident(I) ident(J)]|TT then {Unify ident(I) ident(J) E} {Interpreter pair(s:TT e:E)|T}
 	 [] [bind ident(I) V]|TT then {Unify ident(I) V E} {Interpreter pair(s:TT e:E)|T}
+
+	 [] [conditional ident(x) s1 s2]|T then
+	    if {IfTrue ident(x) X} then
+	       {Browse true}
+	    else
+	       {Browse false}
+	    end
+	    
 	 [] H|nil then {Interpreter [pair(s:H e:E)]}
 	    
 	 else
@@ -35,9 +43,8 @@ Z=
 Y=
 [[var ident(x)
   [var ident(y)
-    [var ident(z)
-     [[bind ident(x) ident(y)] [bind ident(x) 3] [nop]]
-    ]
+   [bind ident(x) true]
+   [conditional ident(x) s1 s2]
   ]
  ]]
 K=[[nop] [nop]]
