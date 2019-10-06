@@ -12,8 +12,8 @@ fun {IfTrue Y E}
    case Y
    of nil then false
    [] ident(X) then
-      local TempX
-	 TempX =  {RetrieveFromSAS E.X}
+      local TempX in
+	 TempX = {RetrieveFromSAS E.X}
 	 case TempX
 	 of nil then false
 	 [] literal(L) then L == true
