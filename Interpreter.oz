@@ -23,6 +23,13 @@ fun {IfTrue Y E}
 	       case RootX
 	       of literal(L) then L == true
 	       else false
+	       end
+	    end
+	 end
+      end
+   end
+end
+
 		  
 	    
 	 
