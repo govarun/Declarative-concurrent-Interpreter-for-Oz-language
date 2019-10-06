@@ -6,6 +6,30 @@ proc {Adjoin E X NE}
       {AdjoinAt E X P NE}
    end
 end
+
+declare
+fun {IfTrue Y E}
+   case Y
+   of nil then false
+   [] ident(X) then
+      local TempX
+	 TempX =  {RetrieveFromSAS E.X}
+	 case TempX
+	 of nil then false
+	 [] literal(L) then L == true
+	 [] equivalence(ParentX) then
+	    local RootX in
+	       RootX = {ReturnRoot ParentX}
+	       case RootX
+	       of literal(L) then L == true
+	       else false
+		  
+	    
+	 
+      
+
+
+
 proc {Interpreter Stack}
    {Browse Stack}
    local NE in
@@ -21,10 +45,13 @@ proc {Interpreter Stack}
 
 	 [] [conditional ident(x) s1 s2]|T then
 	    if {IfTrue ident(x) X} then
-	       {Browse true}
+	       {Browse true} 
+	       {Interpreter pair(s:s1 e:E)|T}
 	    else
 	       {Browse false}
+	       {Interpreter pair(s:s2 e:E)|T}
 	    end
+	    
 	    
 	 [] H|nil then {Interpreter [pair(s:H e:E)]}
 	    
