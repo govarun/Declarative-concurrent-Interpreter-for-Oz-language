@@ -4,14 +4,22 @@ SAS = {Dictionary.new}
 declare C
 {NewCell 0 ?C}
 
-fun {ReturnRoot Key}
-  local Value in
-    {Dictionary.get SAS Key Value}
-     case Value
-     of equivalence(X) then if X==Key then equivalence(Key) else {ReturnRoot X} end
-     else Value
-     end
-  end
+fun {ReturnRoot Key} % Handle nil
+   case Key
+   of nil then nil
+   else   
+      local Value in
+	 {Dictionary.get SAS Key Value}
+	 case Value
+	 of equivalence(X) then
+	    if X==Key then
+	       equivalence(Key)
+	    else {ReturnRoot X}
+	    end
+	 else Value
+	 end
+      end
+   end
 end
 
 
@@ -39,7 +47,10 @@ proc {BindRefToKeyInSAS Key RefKey}
      else
 	case B
 	of equivalence(Y) then {Dictionary.put SAS Y A}
-	else if A==B then skip else {Browse 'Error'} end
+	else
+	   if A==B then skip
+	   else {Browse 'Error'} end
+	   
 	end
      end
   end
@@ -51,7 +62,11 @@ proc {BindValueToKeyInSAS Key Val}
     A = {ReturnRoot Key}
     case A
     of equivalence(X) then {Dictionary.put SAS X Val}
-    else if A==Val then skip else {Browse 'Error in BindValue'} end
+    else
+       if A==Val then skip
+       else {Browse 'Error in BindValue'} end
+       
+       
     end
   end
 end
