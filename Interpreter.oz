@@ -27,6 +27,7 @@ fun {IfTrue Y E}
 	    end
 	 end
       end
+   else false
    end
 end
 
@@ -46,17 +47,17 @@ proc {Interpreter Stack}
 	 case X 
 	 of nil then {Interpreter T}
 	 [] [nop]|TT then {Interpreter pair(s:TT e:E)|T}
-	 [] [var ident(I) S]|TT then {Adjoin E I NE} {Interpreter pair(s:[S] e:NE)|pair(s:TT e:E)|T}
+	 [] [var ident(I) S]|TT then {Adjoin E I NE} {Interpreter pair(s:[S] e:NE)|pair(s:TT e:E)|T} {Browse 'Yes'}
 	 [] [bind ident(I) ident(J)]|TT then {Unify ident(I) ident(J) E} {Interpreter pair(s:TT e:E)|T}
 	 [] [bind ident(I) V]|TT then {Unify ident(I) V E} {Interpreter pair(s:TT e:E)|T}
 
-	 [] [conditional ident(x) s1 s2]|T then
-	    if {IfTrue ident(x) X} then
+	 [] [conditional ident(I) S1 S2]|TT then
+	    if {IfTrue ident(I) X} then
 	       {Browse true} 
-	       {Interpreter pair(s:s1 e:E)|T}
+	       {Interpreter pair(s:S1 e:E)|pair(s:TT e:E)|T}
 	    else
 	       {Browse false}
-	       {Interpreter pair(s:s2 e:E)|T}
+	       {Interpreter pair(s:S2 e:E)|pair(s:TT e:E)|T}
 	    end
 	    
 	    
@@ -77,9 +78,9 @@ Z=
 Y=
 [[var ident(x)
   [var ident(y)
-   [bind ident(x) true]
-   [conditional ident(x) s1 s2]
   ]
+  [bind ident(x) true]
+   [conditional ident(x) s1 s2]
  ]]
 K=[[nop] [nop]]
 
