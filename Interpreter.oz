@@ -30,9 +30,6 @@ fun {IfTrue Y E}
    else false
    end
 end
-
-		  
-	    
 	 
       
 
@@ -60,7 +57,6 @@ proc {Interpreter Stack}
 	       {Interpreter pair(s:S2 e:E)|pair(s:TT e:E)|T}
 	    end
 	    
-	    
 	 [] H|nil then {Interpreter [pair(s:H e:E)]}
 	    
 	 else
@@ -79,8 +75,8 @@ Y=
 [[var ident(x)
   [var ident(y)
   ]
-  [bind ident(x) true]
-   [conditional ident(x) s1 s2]
+  [bind ident(x) literal(true)]
+   [conditional ident(x) [nop] [nop]]
  ]]
 K=[[nop] [nop]]
 
