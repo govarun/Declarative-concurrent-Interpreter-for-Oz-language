@@ -53,3 +53,8 @@ proc {BindValueToKeyInSAS Key Val}
     end 
   end
 end
+
+proc {PrintAll Current}
+  if Current == 1 then {Browse 'Printing Single Assigment Store:'} end
+  if Current > @C then {Browse 'Done Printing Single Assigment Store'} else {Browse {Dictionary.get SAS Current ?}} {PrintAll Current+1} end
+end

@@ -1,0 +1,8 @@
+Implemented Q-1,2,3,5a, 6
+Homework 3 Question 1 and 2
+
+Changes made:-
+
+Created File Interpreter.oz with functions Interpreter and Adjoin
+
+Created File SingleAssignmentStore.oz Implemented the Functions needed by unify
